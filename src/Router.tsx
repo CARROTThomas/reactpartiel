@@ -1,9 +1,11 @@
 import {Route, Routes} from "react-router-dom";
 import {User} from "./User.tsx";
 import App from "./App.tsx";
-import {Board} from "./Board.tsx";
-import {WorkspaceCreate} from "./WorkspaceCreate.tsx";
-import {WorkspaceEdit} from "./WorkspaceEdit.tsx";
+import {CartIndex} from "./Cart/CartIndex.tsx";
+import Scan from "./Cart/Scan.tsx";
+import {Orders} from "./Order/Orders.tsx";
+import {Order} from "./Order/Order.tsx";
+import AnimationPayment from "./animation/Animation.tsx";
 
 export const Router = () =>{
     return (
@@ -15,9 +17,15 @@ export const Router = () =>{
             <Route path="login" element={<User />} />
             <Route path="logout" element={<User />} />
 
-            <Route path="myboard" element={<Board />} />
-            <Route path="myboard/create" element={<WorkspaceCreate />} />
-            <Route path="myboard/edit/:id" element={<WorkspaceEdit />} />
+            <Route path="/cart" element={<CartIndex />} />
+            <Route path="/add" element={<Scan />} />
+
+
+            <Route path="/orders" element={<Orders />} />
+            <Route path="/order/:id" element={<Order />} />
+
+
+            <Route path="/animation" element={<AnimationPayment />} />
         </Routes>
         </>
     )

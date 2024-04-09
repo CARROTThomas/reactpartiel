@@ -6,12 +6,97 @@
 body {
   width: 100%;
   height: 100vh;
-  overflow: hidden;
-  background-color: grey;
+  overflow-x: hidden;
+  background-color: #fcfcfc;
 }
 
-#root {
+.navbar {
+  height: 10vh;
+  font-size: 1.3em;
+}
+
+
+ul, li, a {
   margin: 0;
   padding: 0;
+  list-style: none;
+  text-decoration: none;
+}
+
+h1, h2, h3, h4, h5, h6, p {
+  margin: 0;
+  padding: 0;
+}
+
+
+.order-details-container {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 20px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  background-color: #f9f9f9;
+}
+
+.header {
+  margin-bottom: 20px;
+}
+
+.header hr {
+  border-top: 2px solid #333;
+}
+
+.btn-secondary {
+  background-color: #6c757d;
+  color: #fff;
+  padding: 8px 16px;
+  border: none;
+  border-radius: 4px;
+  text-decoration: none;
+}
+
+.btn-secondary:hover {
+  background-color: #495057;
+}
+
+ul {
+  list-style: none;
+  padding: 0;
+}
+
+li {
+  margin-bottom: 5px;
+}
+
+/* Scan.css */
+.scan-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.scan-button {
+  margin-bottom: 20px;
+  padding: 10px 20px;
+  font-size: 16px;
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.video-container {
+  width: 640px;
+  height: 480px;
+  border: 2px solid #ccc;
+  border-radius: 10px;
+  overflow: hidden;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+}
+
+.video {
   width: 100%;
+  height: 100%;
+  object-fit: cover;
 }

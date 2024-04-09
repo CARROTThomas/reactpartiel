@@ -26,19 +26,15 @@ export function NavBar() {
                 <nav className="navbar navbar-expand-lg bg-dark">
                     <div className="container-lg d-flex align-items-center justify-content-between">
                         <a className="nav-link text-light" id="logoNavBarre" href="/">LOGO</a>
-                        <button className="navbar-toggler" type="button" data-bs-toggle="collapse"
-                                data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false"
-                                aria-label="Toggle navigation">
-                            <span className="navbar-toggler-icon"></span>
-                        </button>
-                        <div className="collapse navbar-collapse justify-content-end text-light" id="navbarNav">
-                            <ul className="navbar-nav">
+                        <div className="text-light">
+                            <ul className="d-flex gap-3">
                                 {state ?
-                                    <li>
+                                    <li className={"d-flex gap-5"}>
+                                        <a className="nav-link text-light" href="/orders">Order</a>
                                         <button onClick={logout} className="nav-link text-light">logout</button>
                                     </li> :
                                     <>
-                                        <li>
+                                    <li>
                                             <a className="nav-link text-light" href="/register">Register</a>
                                         </li>
                                         <li>

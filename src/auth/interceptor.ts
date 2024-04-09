@@ -7,6 +7,7 @@ const axiosInstance = axios.create();
 axiosInstance.interceptors.request.use(
     (config) => {
         // Ajouter des en-têtes à la requête
+        //console.log(GlobalConstant.token)
         config.headers['Authorization'] = `Bearer ${GlobalConstant.token}`;
         // Vous pouvez également ajouter d'autres en-têtes ici si nécessaire
         return config;

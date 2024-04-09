@@ -24,16 +24,20 @@ export function User() {
     }
 
     async function login() {
-        const user  = {username,password};
-        await axios.post(GlobalConstant.baseurl+"token", user)
-            .then((response)=>{
-                console.log(response.data)
-                localStorage.setItem("bearerToken",response.data["access"])
-                setTimeout(()=>{
-                    navigate("/")
-                    window.location.reload()
-                },500)
-            })
+        const user = { username, password };
+        try {
+            const response = await axios.post(GlobalConstant.baseurl + "/api/login_check", user);
+            const token = response.data.token; // Récupérer le token depuis la réponse
+            localStorage.setItem("bearerToken", token); // Stocker le token dans le localStorage
+            GlobalConstant.token = token; // Mettre à jour GlobalConstant.token avec le nouveau token
+            GlobalConstant.isLogged = true; // Définir isLogged à true car l'utilisateur est connecté
+            setTimeout(() => {
+                navigate("/")
+                window.location.reload()
+            }, 500);
+        } catch (error) {
+            console.error("Une erreur s'est produite lors de la connexion :", error);
+        }
     }
 
 

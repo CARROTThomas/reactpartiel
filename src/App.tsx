@@ -3,17 +3,20 @@ import {GlobalConstant} from "./Common/global-constant.ts";
 
 function App() {
 
-
   return (
     <>
       <div className="container">
-          <h1>Welcome to Trello</h1>
+          <h1>Welcome to ScanLib</h1>
           {GlobalConstant.isLogged ?
-              <div>
-                  <a href="/myboard">check your board</a>
+              <div className="">
+                  <a className={"btn btn-primary"} href="/cart">voir mon panier</a>
               </div>
               :
-              <></>
+              <>
+                  <div className="">
+                      <a className={"btn btn-primary"} href="/login">log require</a>
+                  </div>
+              </>
           }
       </div>
     </>
