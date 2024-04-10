@@ -16,7 +16,7 @@ export function User() {
 
     function register() {
         const user = {username,password};
-        axios.post(GlobalConstant.baseurl+"register",user)
+        axios.post(GlobalConstant.baseurl+"/register",user)
             .then((response)=>{
                 console.log(response.data["message"])
             })
