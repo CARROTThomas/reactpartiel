@@ -3,9 +3,23 @@ import { GlobalConstant } from "../Common/global-constant.ts";
 import axiosInstance from "../auth/interceptor.ts";
 import { useNavigate } from "react-router-dom";
 
+interface CartItem {
+    name: string;
+    price: number;
+    quantity: number;
+    product_id: string;
+}
+
+interface CartData {
+    profile: {
+        username: string;
+    };
+    items: CartItem[];
+}
+
 export function CartIndex() {
-    const [cartData, setCartData] = useState(null);
-    const [total, setTotal] = useState(0);
+    const [cartData, setCartData] = useState<CartData | null>(null);
+    const [total, setTotal] = useState<number>(0);
     const navigate = useNavigate();
 
     useEffect(() => {
@@ -17,13 +31,15 @@ export function CartIndex() {
             const response = await axiosInstance.get(GlobalConstant.baseurl + '/api/order/cart');
             console.log(response.data.cart);
             setCartData(response.data.cart);
-            calculateTotal(response.data.cart.items);
+            if (response.data.cart && response.data.cart.items) {
+                calculateTotal(response.data.cart.items);
+            }
         } catch (error) {
             console.error("Une erreur s'est produite lors de la récupération du panier :", error);
         }
     }
 
-    async function add(id) {
+    async function add(id: string) {
         try {
             const response = await axiosInstance.post(GlobalConstant.baseurl + `/api/order/add/${id}`);
             setCartData(response.data.cart);
@@ -36,7 +52,7 @@ export function CartIndex() {
         }
     }
 
-    async function remove(id) {
+    async function remove(id: string) {
         try {
             const response = await axiosInstance.post(GlobalConstant.baseurl + `/api/order/remove/${id}`);
             setCartData(response.data.cart);
@@ -59,7 +75,7 @@ export function CartIndex() {
         }
     }
 
-    function calculateTotal(items) {
+    function calculateTotal(items: CartItem[]) {
         let totalPrice = 0;
         items.forEach((item) => {
             totalPrice += item.price * item.quantity;

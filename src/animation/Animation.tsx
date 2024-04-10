@@ -1,19 +1,21 @@
-import React, { useRef, useEffect } from 'react';
+import { useRef, useEffect } from 'react';
 import * as THREE from 'three/src/Three.js';
 
 const ThreeComponent = () => {
     const sceneRef = useRef();
-    const renderer = useRef();
-    const camera = useRef();
+    const renderer : any = useRef();
+    const camera :any = useRef();
 
     useEffect(() => {
         const scene = new THREE.Scene();
-        camera.current = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
 
-        renderer.current = new THREE.WebGLRenderer({ antialias: true });
+        camera.current = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000) as any;
+        renderer.current = new THREE.WebGLRenderer({ antialias: true }) as any;
         renderer.current.setSize(400, 350);
         renderer.current.setClearColor(0xffffff); // Fond blanc
 
+        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+        // @ts-expect-error
         sceneRef.current.appendChild(renderer.current.domElement);
 
         const geometry = new THREE.BoxGeometry();
@@ -70,6 +72,8 @@ const ThreeComponent = () => {
         camera.current.updateProjectionMatrix();
     };
 
+    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+    // @ts-expect-error
     return <div ref={sceneRef} />;
 };
 

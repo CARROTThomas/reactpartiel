@@ -1,10 +1,16 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import axiosInstance from "../auth/interceptor.ts";
 import { GlobalConstant } from "../Common/global-constant.ts";
 
+interface Order {
+    id: string;
+    date: string;
+    // Ajoutez d'autres propriétés si nécessaire
+}
+
 export function Orders() {
-    const [ordersList, setOrdersList] = useState([]);
+    const [ordersList, setOrdersList] = useState<Order[]>([]); // Spécifiez le type pour ordersList
 
     useEffect(() => {
         fetchOrders();
@@ -24,7 +30,7 @@ export function Orders() {
             <div className={"container"}>
                 <h1>Orders :</h1>
                 <div className="row d-flex">
-                    {ordersList.map((order, index) => (
+                    {ordersList.map((order: Order, index: number) => (
                         <div key={index} className="col-md-4 mb-4">
                             <Link to={`/order/${order.id}`} className="card-link">
                                 <div className="card">

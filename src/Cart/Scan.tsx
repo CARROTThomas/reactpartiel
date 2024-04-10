@@ -1,47 +1,53 @@
-import React, { useRef, useEffect, useState } from 'react';
+import { useRef, useEffect, useState } from 'react';
 import axiosInstance from "../auth/interceptor"; // Importer l'intercepteur Axios
 import jsQR from 'jsqr';
 import { GlobalConstant } from "../Common/global-constant";
 import {useNavigate} from "react-router-dom";
 
 export default function Scan() {
-    const videoRef = useRef(null);
-    const canvasRef = useRef(null);
-    const [qrContent, setQRContent] = useState(null);
-    const navigate = useNavigate()
+    const videoRef = useRef<HTMLVideoElement>(null); // Définir le type de référence vidéo
+    const canvasRef = useRef<HTMLCanvasElement>(null); // Définir le type de référence canvas
+    const [qrContent, setQRContent] = useState<string | null>(null); // Spécifier le type de qrContent
+    const navigate = useNavigate();
 
     const startCamera = async () => {
         try {
             const stream = await navigator.mediaDevices.getUserMedia({ video: true });
-            videoRef.current.srcObject = stream;
+            if (videoRef.current) {
+                videoRef.current.srcObject = stream;
+            }
         } catch (error) {
             console.error('Impossible d\'accéder à la caméra : ', error);
         }
     };
 
     const handleScan = () => {
-        if (canvasRef.current) {
+        if (canvasRef.current && videoRef.current) {
             const canvas = canvasRef.current;
             const context = canvas.getContext('2d');
-            context.drawImage(videoRef.current, 0, 0, canvas.width, canvas.height);
-            const imageData = context.getImageData(0, 0, canvas.width, canvas.height);
-            const code = jsQR(imageData.data, imageData.width, imageData.height);
-            if (code) {
-                setQRContent(code.data);
+            if (context) {
+                context.drawImage(videoRef.current, 0, 0, canvas.width, canvas.height);
+                const imageData = context.getImageData(0, 0, canvas.width, canvas.height);
+                const code = jsQR(imageData.data, imageData.width, imageData.height);
+                if (code) {
+                    setQRContent(code.data);
+                }
             }
         }
     };
 
     const handleRetrieveQRContent = async () => {
         try {
-            const response = await axiosInstance.get(`${GlobalConstant.baseurl}/admin/product/findby/qrcode/${qrContent}`);
-            console.log("Réponse de la requête GET:", response.data);
+            if (qrContent) {
+                const response = await axiosInstance.get(`${GlobalConstant.baseurl}/admin/product/findby/qrcode/${qrContent}`);
+                console.log("Réponse de la requête GET:", response.data);
 
-            console.log("ID du produit récupéré:", response.data);
-            if (response.data) {
-                await addProduct(response.data);
-            } else {
-                console.error("ID du produit non trouvé dans la réponse:", response.data);
+                console.log("ID du produit récupéré:", response.data);
+                if (response.data) {
+                    await addProduct(response.data);
+                } else {
+                    console.error("ID du produit non trouvé dans la réponse:", response.data);
+                }
             }
         } catch (error) {
             console.error("Une erreur s'est produite lors de la récupération du panier :", error);
@@ -49,11 +55,11 @@ export default function Scan() {
     };
 
 
-    const addProduct = async (productId) => {
+    const addProduct = async (productId: string) => { // Spécifier le type du paramètre productId
         try {
             const response = await axiosInstance.post(`${GlobalConstant.baseurl}/api/order/add/${productId}`);
             console.log(response.data);
-            navigate("/cart")
+            navigate("/cart");
         } catch (error) {
             console.error("Une erreur s'est produite lors de l'ajout d'un élément au panier :", error);
         }
