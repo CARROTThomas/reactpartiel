@@ -2,20 +2,8 @@ import { useState, useEffect } from "react";
 import { GlobalConstant } from "../Common/global-constant.ts";
 import axiosInstance from "../auth/interceptor.ts";
 import { useNavigate } from "react-router-dom";
-
-interface CartItem {
-    name: string;
-    price: number;
-    quantity: number;
-    product_id: string;
-}
-
-interface CartData {
-    profile: {
-        username: string;
-    };
-    items: CartItem[];
-}
+import { CartItem } from "../Interfaces/CartItem.ts";
+import { CartData } from "../Interfaces/CartData.ts";
 
 export function CartIndex() {
     const [cartData, setCartData] = useState<CartData | null>(null);

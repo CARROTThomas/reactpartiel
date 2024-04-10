@@ -2,15 +2,10 @@ import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import axiosInstance from "../auth/interceptor.ts";
 import { GlobalConstant } from "../Common/global-constant.ts";
-
-interface Order {
-    id: string;
-    date: string;
-    // Ajoutez d'autres propriétés si nécessaire
-}
+import { Order } from "../Interfaces/Order.ts";
 
 export function Orders() {
-    const [ordersList, setOrdersList] = useState<Order[]>([]); // Spécifiez le type pour ordersList
+    const [ordersList, setOrdersList] = useState<Order[]>([]);
 
     useEffect(() => {
         fetchOrders();
@@ -19,7 +14,7 @@ export function Orders() {
     async function fetchOrders() {
         try {
             const response = await axiosInstance.get(GlobalConstant.baseurl + '/api/orders');
-            setOrdersList(response.data.orders); // Mettre à jour la liste des commandes avec les données de la réponse
+            setOrdersList(response.data.orders);
         } catch (error) {
             console.error("Une erreur s'est produite lors de la récupération des commandes :", error);
         }
